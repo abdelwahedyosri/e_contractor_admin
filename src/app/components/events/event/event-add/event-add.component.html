@@ -1,0 +1,145 @@
+<div class="container-fluid">
+    <div class="row product-page-main card-body">
+      <div class= "col-xl-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Add New Event</h5>
+          </div>
+          <div class="card-body">
+            <div class="digital-add needs-validation">
+              <form [formGroup]="eventForm" (ngSubmit)="submitForm()" novalidate>
+                <div *ngIf="errorMessages.length > 0" class="text-danger">
+                  <div *ngFor="let errorMessage of errorMessages">{{ errorMessage }}</div>
+                </div>
+                <div class="form-group">
+                  <label for="validationCustom010" class="col-form-label pt-0"><span>*</span> Title :</label>
+                  <input class="form-control" id="validationCustomftitle" type="text" required formControlName="title">
+                  <div *ngIf="eventForm.get('title').invalid && eventForm.get('title').touched" class="text-danger">
+                   Title is required.
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="validationCustomtitle" class="col-form-label pt-0"><span>*</span> slug :</label>
+                  <input class="form-control" id="validationCustomtitle" type="text" required formControlName="slug">                
+                </div>
+                <div class="form-group row">
+                    <div><label>Full description :</label></div>
+                    <div class="ps-0 full_description-sm">
+                      <ckeditor [editor]="Editor" (ready)="onEditorReady($event)"></ckeditor>
+                    </div>
+                    <div *ngIf="eventForm.get('full_description').invalid && eventForm.get('full_description').touched" class="text-danger">
+                      Full Description is required.
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="validationCustom08" class="col-form-label"> <span>*</span> Short Description :</label>
+                    <ckeditor [editor]="Editor" (ready)="onShortDescriptionEditorReady($event)"></ckeditor>
+                    <div *ngIf="eventForm.get('short_description').invalid && eventForm.get('short_description').touched" class="text-danger">
+                      Short Description is required.
+                    </div>
+                  </div>
+             
+                <div class="form-group">
+                  <label class="col-form-label"> <span>*</span> Categories :</label>
+                  <select class="custom-select form-select" required formControlName="categories" multiple name="categories">
+                    <option value="">Select a category</option>
+                    <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                  </select>
+                  <div *ngIf="eventForm.get('categories').invalid && eventForm.get('categories').touched" class="text-danger">
+                    Categories field is  required.
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags">Tags :</label>
+                    <input type="text" id="tags" formControlName="tags" class="form-control" placeholder="Enter tags (comma-separated)"   name="tags"/>
+                    <div *ngIf="eventForm.get('tags').invalid && eventForm.get('tags').touched" class="text-danger">
+                    Tags field is  required.
+                    </div>
+                  </div>
+                <div class="form-group">
+                  <label for="validationCustom02" class="col-form-label"> <span>*</span> Ticket Price :</label>
+                  <input class="form-control" id="validationCustom02" type="number" required formControlName="ticket_price">
+                  <div *ngIf="eventForm.get('ticket_price').invalid && eventForm.get('ticket_price').touched" class="text-danger">
+                    Ticket Price field is  required.
+                      </div>
+                </div>
+                <div class="form-group">
+                  <label for="validationCustom03" class="col-form-label"> <span>*</span> Stock :</label>
+                  <input class="form-control" id="validationCustom03" type="number" required formControlName="stock">
+                  <div *ngIf="eventForm.get('stock').invalid && eventForm.get('stock').touched" class="text-danger">
+                    Stock field is required.
+                      </div>
+                </div>
+                <div class="form-group">
+                    <label for="validationCustom04" class="col-form-label"> <span>*</span> Start Date :</label>
+                    <input class="form-control" id="validationCustom04" type="date" required formControlName="start_date">
+                    <div *ngIf="eventForm.get('start_date').invalid && eventForm.get('start_date').touched" class="text-danger">
+                        Start Date field is  required.
+                     </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="validationCustom05" class="col-form-label"> <span>*</span> End Date :</label>
+                    <input class="form-control" id="validationCustom05" type="date" required formControlName="end_date">
+                    <div *ngIf="eventForm.hasError('endDateInvalid') && eventForm.get('end_date').touched" class="text-danger">
+                      End Date must be after Start Date.
+                    </div>
+                  </div>
+                <div class="form-group">
+                  <label for="validationCustom06" class="col-form-label"> <span>*</span> Location :</label>
+                  <input class="form-control" id="validationCustom06" type="text" required formControlName="location">
+                  <div *ngIf="eventForm.get('location').invalid && eventForm.get('location').touched" class="text-danger">
+                    Location field is  required.
+                 </div>
+                </div>
+                <div class="form-group">
+                  <label for="validationCustom06" class="col-form-label"> <span>*</span> First Team Name : </label>
+                  <input class="form-control" id="validationCustom06" type="text" required formControlName="team1_name" name="team1_name">
+                </div>
+                <div class="form-group">
+                  <label for="validationCustom06" class="col-form-label"> <span>*</span> Second Team Name : </label>
+                  <input class="form-control" id="validationCustom06" type="text" required formControlName="team2_name" name="team2_name">
+                  <div *ngIf="eventForm.hasError('sameTeamNames') && eventForm.get('team2_name').touched" class="text-danger">
+                    Team names cannot be the same.
+                  </div>
+                </div>
+              
+                <div class="form-group">
+                  <label for="validationCustom07" class="col-form-label"> <span>*</span> Video :</label>
+                  <input class="form-control" id="validationCustom07" type="url" required formControlName="video">
+                  <div *ngIf="eventForm.get('video').invalid && eventForm.get('video').touched" class="text-danger">
+                    <div *ngFor="let error of getVideoErrors(eventForm.get('video'))">{{ error }}</div>
+                 </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="images">Images</label>
+                  <ngx-dropzone (change)="onImageUpload($event)"></ngx-dropzone>
+                  <div *ngIf="url.length > 0">
+                    <div class="row">
+                    <div *ngFor="let imageUrl of url; let i = index" class="image-container col-3">
+                      <img [src]="imageUrl" class="image-preview" alt="Preview" width="300" height="200" />
+                      <button type="button" class="btn btn-danger" (click)="removeImage(i)">Remove</button>
+                      </div>
+                           
+                    </div>
+                  </div>
+                </div>
+                
+                
+                <!-- Add the rest of the form fields here -->
+              
+                <div class="product-buttons text-end mt-3">
+                  <button type="submit" class="btn btn-primary">Add</button>
+                  <button type="button" class="btn btn-light">Discard</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Rest of the HTML code -->
+      <!-- ... -->
+    </div>
+  </div>
+  

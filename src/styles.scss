@@ -1,0 +1,15 @@
+.mat-snack-bar-container {
+    top: 0 !important;
+    bottom: auto !important;
+  }
+
+  /* styles.scss */
+.error-snackbar {
+    background-color: red !important;
+    color: white !important;
+  }
+  
+  .is-invalid {
+    border: 2px solid red !important;
+  }
+  

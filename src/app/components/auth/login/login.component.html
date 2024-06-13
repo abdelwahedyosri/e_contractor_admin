@@ -1,0 +1,93 @@
+<div class="page-wrapper">
+  <div class="authentication-box">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 p-0 card-left">
+          <div class="card bg-primary">
+            <div class="svg-icon">
+              <!-- SVG icon content -->
+              <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                   xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 468.52 468.52"
+                   style="enable-background:new 0 0 468.52 468.52;" xml:space="preserve">
+                <g>
+                  <path style="fill:#E6E6E6;" d="M468.52,102.595v251.88c0,11.14-7.571,20.52-17.86,23.25c-1.98,0.531-4.06,0.81-6.2,0.81H38.58
+                      c-13.29,0-24.061-10.77-24.061-24.06v-251.88c0-13.29,10.771-24.06,24.061-24.06h405.88c2.14,0,4.22,0.28,6.2,0.81
+                      C460.949,82.075,468.52,91.455,468.52,102.595" />
+                  <path style="fill:#B3B3B3;" d="M468.518,102.591v23.94h-454v-23.94c0-13.29,10.771-24.06,24.06-24.06h405.88
+                      C457.747,78.532,468.518,89.302,468.518,102.591" />
+                  <!-- Additional SVG elements -->
+                </g>
+              </svg>
+            </div>
+            <div class="single-item">
+              <owl-carousel-o [options]="owlcarouselOptions">
+                <ng-container *ngFor="let data of owlcarousel">
+                  <ng-template carouselSlide class="item">
+                    <div>
+                      <h3>{{ data.title }}</h3>
+                      <p>{{ data.desc }}</p>
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </owl-carousel-o>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7 p-0 card-right">
+          <div class="card tab2-card">
+            <div class="card-body">
+              <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                <li [ngbNavItem]="1">
+                  <a ngbNavLink>Login</a>
+                  <ng-template ngbNavContent>
+                    <div class="tab-pane fade active show" id="account" role="tabpanel"
+                         aria-labelledby="account-tab">
+                      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+                            class="form-horizontal auth-form" novalidate>
+                        <div class="form-group">
+                          <input formControlName="userName" type="email" 
+                                 class="form-control" 
+                                 [ngClass]="{'is-invalid': loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid}" 
+                                 placeholder="Username" id="exampleInputEmail1">
+                        </div>
+                        <div class="form-group">
+                          <input formControlName="password" type="password" 
+                                 class="form-control" 
+                                 [ngClass]="{'is-invalid': loginForm.get('password')?.touched && loginForm.get('password')?.invalid}" 
+                                 placeholder="Password">
+                        </div>
+                        <div class="form-terms">
+                          <div class="custom-control custom-checkbox d-flex align-items-center flex-wrap">
+                            <input type="checkbox" class="custom-control-input me-2" formControlName="rememberMe"
+                                   id="customControlAutosizing">
+                            <label class="custom-control-label"
+                                   for="customControlAutosizing">Remember me</label>
+                            <a [routerLink]="['/forgot-password']"
+                               class="btn btn-default forgot-pass ms-auto">Forgot password</a>
+                          </div>
+                        </div>
+                        <div class="form-button">
+                          <button class="btn btn-primary" type="submit">Login</button>
+                        </div>
+                        <div class="form-footer">
+                          <span>Or Login up with social platforms</span>
+                          <ul class="social">
+                            <li><a class="icon-facebook" href="javascript:void(0)"></a></li>
+                            <li><a class="icon-twitter" href="javascript:void(0)"></a></li>
+                            <li><a class="icon-instagram" href="javascript:void(0)"></a></li>
+                            <li><a class="icon-pinterest" href="javascript:void(0)"></a></li>
+                          </ul>
+                        </div>
+                      </form>
+                    </div>
+                  </ng-template>
+                </li>
+              </ul>
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

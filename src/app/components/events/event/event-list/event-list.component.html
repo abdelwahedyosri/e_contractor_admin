@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Events Listing</h5>
+          </div>
+          <div class="card-body">
+            <div id="batchDelete" class="custom-datatable">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col" sortable="img" (sort)="onSort({ column: 'img', direction: $event })">Image</th>
+                      <th scope="col" sortable="title" (sort)="onSort({ column: 'title', direction: $event })">Event Title</th>
+                      <th scope="col" sortable="stock" (sort)="onSort({ column: 'stock', direction: $event })">Stock</th>
+                      <th scope="col" sortable="ticket_price" (sort)="onSort({ column: 'ticket_price', direction: $event })">Ticket Price</th>
+                      <th scope="col" sortable="start_date" (sort)="onSort({ column: 'start_date', direction: $event })">Start Date</th>
+                      <th scope="col" sortable="end_date" (sort)="onSort({ column: 'end_date', direction: $event })">End Date</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let event of tableItem$ | async">
+                      <th scope="row">{{ event.id }}</th>
+                      <td>
+                        <img [src]="event.img" class="imgTable" style="width: 20px" />
+                      </td>
+                      <td>{{ event.title }}</td>
+                      <td>{{ event.stock }}</td>
+                      <td>{{ event.ticket_price }}</td>
+                      <td>{{ event.start_date | date:'dd/MM/yyyy' }}</td>
+                      <td>{{ event.end_date | date:'dd/MM/yyyy' }}</td>
+                      <td>
+                        <a [routerLink]="['/events/event-detail/', event.id]" ><i class="fa fa-eye f-12"></i></a>&nbsp;
+                        <a [routerLink]="['/events/edit-event/', event.id]" title="Edit Event"><i class="fa fa-edit f-12"></i></a>&nbsp;
+                        <a href="javascript:void(0)" (click)="deleteEvent(event.id)"><i class="fa fa-trash-o"></i></a> 
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
