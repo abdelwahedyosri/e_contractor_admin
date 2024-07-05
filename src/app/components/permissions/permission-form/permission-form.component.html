@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <h5>{{ permissionId ? 'Edit Permission' : 'Add Permission' }}</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="permissionForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" formControlName="name" class="form-control" />
+          <div *ngIf="permissionForm.get('name').invalid && (permissionForm.get('name').dirty || permissionForm.get('name').touched)" class="text-danger">
+            Name is required.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="permissionForm.invalid">{{ permissionId ? 'Update' : 'Create' }}</button>
+        <button type="button" class="btn btn-secondary" routerLink="/permissions">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'default',
+        path: 'dashboard',
         component: DashboardComponent,
         data: {
           title: "Dashboard",

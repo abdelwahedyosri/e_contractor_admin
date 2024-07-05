@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/service/auth.service';
+import { UserService } from 'src/app/shared/service/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -15,7 +15,7 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private userService: UserService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router
@@ -42,7 +42,7 @@ export class ResetPasswordComponent implements OnInit {
 
     const { email, newPassword } = this.resetPasswordForm.value;
 
-    this.authService.resetPassword(this.token, email, newPassword).subscribe({
+    this.userService.resetPassword(this.token, email, newPassword).subscribe({
       next: () => {
         this.snackBar.open('Password updated successfully.', 'Close', {
           duration: 3000,

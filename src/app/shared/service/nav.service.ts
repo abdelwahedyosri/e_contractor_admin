@@ -76,8 +76,14 @@ export class NavService {
 		},*/
 		{
 			title: 'Users', icon: 'user-plus', type: 'sub', active: false, children: [
-				{ path: '/users/list-user', title: 'User List', type: 'link' },
+				{ path: '/users/list-users', title: 'User List', type: 'link' },
 				{ path: '/users/create-user', title: 'Create User', type: 'link' },
+			]
+		},
+		{
+			title: 'Roles', icon: 'archive', type: 'sub', active: false, children: [
+				{ path: '/roles/role-list', title: 'Roles List', type: 'link' },
+				{ path: '/roles/role-form', title: 'Add a new Role', type: 'link' },
 			]
 		},
 	

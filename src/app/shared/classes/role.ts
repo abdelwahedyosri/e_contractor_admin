@@ -1,9 +1,7 @@
+
 export interface Role {
-    roleId: number;
-    role: string;
-    roleDescription?: string;
-    creationDate: string;
-    createdBy: string;
-    isDeleted: boolean;
-  }
-  
+  roleId?: number;
+  role: string;
+  permissionIds: number[];
+  createdBy?: string;
+}

@@ -45,7 +45,7 @@
                       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
                             class="form-horizontal auth-form" novalidate>
                         <div class="form-group">
-                          <input formControlName="userName" type="email" 
+                          <input formControlName="userName" 
                                  class="form-control" 
                                  [ngClass]="{'is-invalid': loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid}" 
                                  placeholder="Username" id="exampleInputEmail1">

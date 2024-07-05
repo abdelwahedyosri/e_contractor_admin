@@ -8,11 +8,11 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'list-user',
+        path: 'list-users',
         component: ListUserComponent,
         data: {
-          title: "User List",
-          breadcrumb: "User List"
+          title: "Back-office Users List",
+          breadcrumb: "Back-office Users List"
         }
       },
       {

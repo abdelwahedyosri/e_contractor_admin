@@ -1,0 +1,33 @@
+<div>
+  <h2 class="mb-3">Roles List</h2>
+  <button routerLink="/roles/role-form" class="btn btn-primary mb-3">Add Role</button>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Permissions</th>
+          <th scope="col">Creation Date</th>
+          <th scope="col">Created By</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let role of roles">
+          <td>{{ role.role }}</td>
+          <td>
+            <span *ngFor="let permission of role.permissions" class="badge badge-info mr-1">
+              {{ permission.name }}
+            </span>
+          </td>
+          <td>{{ role.creationDate | date:'short' }}</td>
+          <td>{{ role.createdBy }}</td>
+          <td>
+            <button routerLink="/roles/edit/{{ role.roleId }}" class="btn btn-secondary btn-sm mr-1">Edit</button>
+            <button (click)="deleteRole(role.roleId)" class="btn btn-danger btn-sm">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

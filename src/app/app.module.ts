@@ -26,6 +26,8 @@ import { AuthModule } from './components/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { EventService } from './shared/service/event.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar'; 
+import { RolesModule } from './components/roles/roles.module';
+import { PermissionsModule } from './components/permissions/permissions.module';
 
 
 
@@ -56,7 +58,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     UsersModule,
     AgGridModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RolesModule,
+    PermissionsModule
     
   ],
   providers: [EventService],

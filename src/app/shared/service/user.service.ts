@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { User } from '../classes/user'; // Ensure you have a User model defined
 import { environment } from '../../../environments/environment'; // Adjust the path as necessary
 import { AuthService } from './auth.service'; // Import AuthService
@@ -14,20 +14,21 @@ export class UserService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  private getHeaders(): HttpHeaders {
+  getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
-
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/forgot-password`, { email });
+  }
   // Register a new user
   registerUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.baseUrl}/register`, user, { headers: this.getHeaders() });
   }
 
   // Reset password
-  resetPassword(email: string): Observable<void> {
-    const params = new HttpParams().set('email', email);
-    return this.http.post<void>(`${this.baseUrl}/reset-password`, null, { params, headers: this.getHeaders() });
+  resetPassword(token: string, email: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/reset-password`, { token, email, newPassword });
   }
 
   // Handle session expired
@@ -36,9 +37,19 @@ export class UserService {
     return this.http.post<void>(`${this.baseUrl}/session-expired`, null, { params, headers: this.getHeaders() });
   }
 
-  // Get all users
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl, { headers: this.getHeaders() });
+  getUsers(page: number, pageSize: number, search: string, sortColumn: string, sortDirection: string): Observable<{ users: User[], total: number }> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString())
+      .set('search', search || '')
+      .set('sortColumn', sortColumn || '')
+      .set('sortDirection', sortDirection || '');
+
+    return this.http.get<{ users: User[], total: number }>(this.baseUrl, { params, headers: this.getHeaders() }).pipe(
+      tap(response => {
+        console.log('API Response:', response); // Debugging statement
+      })
+    );
   }
 
   // Method to get username
@@ -103,6 +114,14 @@ export class UserService {
     const params = new HttpParams().set('provider', provider).set('providerUserId', providerUserId);
     return this.http.get<User>(`${this.baseUrl}/social-account`, { params, headers: this.getHeaders() });
   }
+  checkUsernameExists(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/exists/${username}`,{headers: this.getHeaders() });
+}
+checkEmailExists(email: string): Observable<boolean> {
+  return this.http.get<boolean>(`${this.baseUrl}/exists/email/${email}`,{headers: this.getHeaders() });
+}
+
+// Register a new user
 
   
 }

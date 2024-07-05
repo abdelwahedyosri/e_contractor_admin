@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
           duration: 3000,
           verticalPosition: 'top'
         });
-        this.router.navigate(['/dashboard/default']);
+        this.router.navigate(['/dashboard']);
       },
       error: () => {
         this.snackBar.open('Login failed. Please check your credentials and try again.', 'Close', { 
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
     const token = this.authService.getToken();
 
     if (token) {
-      this.router.navigate(['/dashboard/default']);
+      this.router.navigate(['/dashboard']);
     }
   }
 

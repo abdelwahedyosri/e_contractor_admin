@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/shared/service/auth.service';
+import { UserService } from 'src/app/shared/service/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -13,7 +13,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private userService: UserService,
     private snackBar: MatSnackBar
   ) {
     this.forgotPasswordForm = this.formBuilder.group({
@@ -33,7 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
 
-    this.authService.forgotPassword(this.forgotPasswordForm.value.email).subscribe({
+    this.userService.forgotPassword(this.forgotPasswordForm.value.email).subscribe({
       next: () => {
         this.snackBar.open('Password reset email sent.', 'Close', {
           duration: 3000,

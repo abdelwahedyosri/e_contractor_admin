@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
+import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class AuthService {
 
   private authUrl = `${environment.apiUrl}`;  
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string, rememberMe: boolean): Observable<any> {
     return this.http.post<any>(`${this.authUrl}/login`, { username, password }).pipe(
@@ -27,9 +29,18 @@ export class AuthService {
     );
   }
 
+  private updateLastLogin(): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.authUrl}/update-last-login`, {}, { headers });
+  }
+
   logout(): void {
-    localStorage.removeItem('jwt_token');
-    sessionStorage.removeItem('jwt_token');
+    this.updateLastLogin().subscribe(() => {
+      localStorage.removeItem('jwt_token');
+      sessionStorage.removeItem('jwt_token');
+      this.router.navigate(['/login']);
+    });
   }
 
   getToken(): string | null {
@@ -39,15 +50,17 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
-  checkUsernameExists(username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.authUrl}/users/exist/${username}`);
-}
 
-forgotPassword(email: string): Observable<any> {
-  return this.http.post(`${this.authUrl}/forgot-password`, { email });
-}
+  
 
-resetPassword(token: string, email: string, newPassword: string): Observable<any> {
-  return this.http.post(`${this.authUrl}/reset-password`, { token, email, newPassword });
-}
+ 
+
+  getUsernameFromToken(): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decoded: any = jwtDecode(token);
+      return decoded.sub; // Assuming 'sub' contains the username
+    }
+    return null;
+  }
 }

@@ -2,17 +2,16 @@ import { Role } from "./role";
 import { UserImage } from "./userImage";
 
 export interface User {
-    userId: number;
+    userId?: number;
     role: Role;
     firstName: string;
     lastName: string;
-    birthDate?: string; // Assuming it's optional
-    phoneNumber?: string; // Assuming it's optional
+    birthDate?: string; 
+    phoneNumber?: string; 
     email: string;
     username: string;
     password: string;
     isActive?: boolean;
-    isApproved?: boolean;
     creationDate?: string;
     createdBy?: string;
     isDeleted?: boolean;
@@ -21,6 +20,8 @@ export interface User {
     location : string;
     gender : string;
     dob : string;
+    lastLogin?: string;
+    avatar?: string;
     
   }
   
