@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5>Job Offer Applications List</h5>
+      <div>
+        <input
+          type="text"
+          [formControl]="searchControl"
+          placeholder="Search application..."
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="card-body">
+      <div
+        id="batchDelete"
+        class="category-table custom-datatable transcation-datatable user-image"
+      >
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" sortable="Reference" (sort)="onSort()">
+                  Reference
+                </th>
+                <th scope="col" sortable="Job Offer" (sort)="onSort()">
+                  Job Offer
+                </th>
+                <th scope="col" sortable="Candidate" (sort)="onSort()">
+                  Candidate
+                </th>
+                <th scope="col" sortable="Files" (sort)="onSort()">Files</th>
+                <th scope="col" sortable="Appointments" (sort)="onSort()">
+                  Appointments
+                </th>
+                <th scope="col" sortable="Status" (sort)="onSort()">Status</th>
+                <th scope="col" sortable="Applied" (sort)="onSort()">
+                  Applied
+                </th>
+                <th scope="col" sortable="Updated" (sort)="onSort()">
+                  Updated
+                </th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of applications">
+                <td>{{ item.reference }}</td>
+                <td>{{ item.jobOffer.jobTitle }}</td>
+                <td>{{ item.studentName }}</td>
+                <td>{{ item.jobApplicationFiles.length }}</td>
+                <td>{{ getAppointmentsCount(item.applicationId) }}</td>
+                <td>
+                  <span
+                    class="cursor-pointer job-application-status"
+                    [ngClass]="{
+                      'bg-2e55fa': item.applicationStatus == 'Sent',
+                      'bg-6c5dd3': item.applicationStatus == 'Accepted',
+                      'bg-black':
+                        item.applicationStatus == 'Declined' ||
+                        item.applicationStatus == 'Rejected',
+                      'bg-pink': item.applicationStatus == 'Approved',
+                      'bg-gray': item.applicationStatus == 'Expired'
+                    }"
+                    >{{ item.applicationStatus }}</span
+                  >
+                </td>
+                <td>{{ item.creationDate }}</td>
+                <td>{{ item.updateDate }}</td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-secondary"
+                    (click)="applicationDetails(item)"
+                  >
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center p-2">
+            <ngb-pagination
+              [collectionSize]="total"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              (pageChange)="onPageChange($event)"
+            >
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

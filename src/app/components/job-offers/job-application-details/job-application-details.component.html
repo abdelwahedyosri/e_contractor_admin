@@ -1,0 +1,419 @@
+<div>
+  <div class="job-offer-page-title" style="padding-left: 10px">
+    <div class="flex-row justify-content-between">
+      <div
+        class="flex-cl justify-content-between w-75"
+        style="display: flex; flex-direction: column"
+      >
+        <label style="font-size: 20px"
+          >Job Offer: {{ job_application.jobOffer.jobTitle }}
+        </label>
+        <label style="font-size: 20px"
+          >Company:
+          {{ job_application.jobOffer.employer.companyName }}
+        </label>
+        <label style="font-size: 20px"
+          >Candidate:
+          {{ job_application.studentName }}
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="flex-row w-100 justify-content-between">
+    <div class="w-100">
+      <div class="student-application-timeline-stepper d-flex flex-wrap">
+        <div class="student-application-timeline-stepper-progress"></div>
+
+        <div
+          class="student-application-timeline-stepper-steps d-flex flex-steps justify-content-between w-100 flex-column"
+        >
+          <div
+            class="d-flex flex-row-column mb-5 step-item"
+            *ngFor="
+              let stepItem of studentApplicationTimeline;
+              let index = index
+            "
+          >
+            <img
+              src="../../../../assets/job-offer/images/Ellipse.png"
+              style="z-index: 1; height: 25px; width: 25px"
+            />
+            <span class="number">{{ stepItem.count }}</span>
+            <div class="flex-cl w-100">
+              <span
+                class="flex-item fs-6 step-span step-span-{{ index }}"
+                [ngClass]="{ 'bold-text': stepItem.enabled }"
+                style="margin-left: 20px"
+              >
+                {{ stepItem.title }}
+              </span>
+              <div *ngIf="stepItem.count == 1" class="content-request w-100">
+                <div class="content-row space-between w-100 mt-20">
+                  <div class="w-100">
+                    <div class="stepper-content mxh-ovf">
+                      <div class="stepper-pane mb-10-px mt-10-px"></div>
+                      <div class="w-100">
+                        <div
+                          class="flex-row justify-content-between align-items-center"
+                        >
+                          <h3 style="font-size: 18px; font-weight: bolder">
+                            {{ submittedApplicationSteps[0].title }}
+                          </h3>
+                        </div>
+                        <div>
+                          <div
+                            class="job-post-company mb-20-px flex-row gap-10-px align-items-center"
+                          >
+                            <span
+                              style="
+                                height: 75px;
+                                width: 75px;
+                                background-color: transparent;
+                              "
+                              ><img
+                                src="../../../../assets/job-offer/images/icons/personnes.png"
+                            /></span>
+                            <div
+                              class="flex-column justify-content-start text-left"
+                            >
+                              <label
+                                class="mb-0"
+                                style="
+                                  font-size: 20px;
+                                  font-weight: bold;
+                                  color: black;
+                                "
+                                >{{ job_application.studentName }}</label
+                              >
+                              <label
+                                class="mb-0"
+                                style="
+                                  font-size: 16px;
+                                  font-weight: normal;
+                                  color: black;
+                                "
+                                >{{ job_application.studentTitle }}</label
+                              >
+                              <label
+                                class="mb-0"
+                                style="
+                                  font-size: 16px;
+                                  font-weight: normal;
+                                  color: gray;
+                                "
+                                >{{ job_application.studentAddress }}</label
+                              >
+                            </div>
+                          </div>
+                          <div>
+                            <p style="margin: 0 0 0.15em; font-weight: bold">
+                              Email address
+                            </p>
+                            <p class="font-black">
+                              {{ job_application.email }}
+                            </p>
+                            <p style="margin: 0 0 0.15em; font-weight: bold">
+                              Phone number
+                            </p>
+                            <p class="font-black">
+                              {{ job_application.phoneNumber }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="stepper-pane mb-10-px mt-10-px">
+                        <div
+                          class="mb-10-px"
+                          style="
+                            height: 1px;
+                            background-color: rgb(185, 204, 225);
+                            width: 100%;
+                          "
+                        ></div>
+                      </div>
+                      <div>
+                        <div
+                          class="flex-row justify-content-between align-items-center"
+                        >
+                          <h3 style="font-size: 18px; font-weight: bolder">
+                            {{ submittedApplicationSteps[1].title }}
+                          </h3>
+                        </div>
+                        <div>
+                          <div class="card-body">
+                            <div
+                              id="batchDelete"
+                              class="category-table custom-datatable transcation-datatable user-image"
+                            >
+                              <div class="table-responsive">
+                                <table class="table table-striped">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col" sortable="Reference">
+                                        #
+                                      </th>
+                                      <th scope="col" sortable="Type">Type</th>
+                                      <th scope="col" sortable="Extension">
+                                        Extension
+                                      </th>
+                                      <th scope="col" sortable="Name">Name</th>
+                                      <th scope="col" sortable="Size">Size</th>
+                                      <th scope="col" sortable="Creation Date">
+                                        Upload Date
+                                      </th>
+                                      <th scope="col" sortable="Actions">
+                                        Actions
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr
+                                      *ngFor="
+                                        let item of job_application.jobApplicationFiles;
+                                        let i = index
+                                      "
+                                    >
+                                      <td>{{ i + 1 }}</td>
+                                      <td>{{ item.applicationFileType }}</td>
+                                      <td>{{ item.jobFile.fileExtension }}</td>
+                                      <td>
+                                        {{ item.jobFile.fileOriginalName }}
+                                      </td>
+                                      <td>{{ item.jobFile.fileSize }}</td>
+                                      <td>{{ item.creationDate }}</td>
+                                      <td>
+                                        <button
+                                          *ngIf="
+                                            item.jobFile.fileExtension !=
+                                              'doc' &&
+                                            item.jobFile.fileExtension != 'docx'
+                                          "
+                                          style="margin: 5px"
+                                          class="btn btn-sm btn-secondary"
+                                          (click)="view(item.jobFile.fileName)"
+                                        >
+                                          View
+                                        </button>
+                                        <button
+                                          style="margin: 5px"
+                                          class="btn btn-sm btn-secondary"
+                                          (click)="
+                                            download(item.jobFile.fileName)
+                                          "
+                                        >
+                                          Download
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="stepper-pane mb-10-px mt-10-px"
+                        *ngIf="job_application?.requirements?.length != 0"
+                      >
+                        <div
+                          class="mb-10-px"
+                          style="
+                            height: 1px;
+                            background-color: rgb(185, 204, 225);
+                            width: 100%;
+                          "
+                        ></div>
+                      </div>
+                      <div>
+                        <div
+                          class="flex-row justify-content-between align-items-center"
+                        >
+                          <h3 style="font-size: 18px; font-weight: bolder">
+                            {{ submittedApplicationSteps[2].title }}
+                          </h3>
+                        </div>
+                        <div
+                          *ngFor="
+                            let requirement of job_application?.requirements;
+                            let index = index
+                          "
+                        >
+                          <p
+                            style="
+                              margin: 0 0 0.15em;
+                              font-weight: bold;
+                              font-size: 17px;
+                            "
+                          >
+                            How many years of work experience do you have in
+                            {{ requirement.label }}?
+                          </p>
+                          <p class="font-black">
+                            {{
+                              getLabel(employmentExperiences, requirement.value)
+                            }}
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="stepper-pane mb-10-px mt-10-px"
+                        *ngIf="job_application?.requirements?.length != 0"
+                      >
+                        <div
+                          class="mb-10-px"
+                          style="
+                            height: 1px;
+                            background-color: rgb(185, 204, 225);
+                            width: 100%;
+                          "
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="stepItem.count == 2" class="content-request w-100">
+                <div>
+                  <li
+                    *ngIf="job_application.approvalDate != null"
+                    style="font-size: 20px; color: #6c5dd3"
+                  >
+                    <i class="fa fa-clock-o"></i> Approved
+                    {{ getFormattedDate(job_application.approvalDate) }}
+                  </li>
+                  <li
+                    *ngIf="job_application.applicationStatus == 'Rejected'"
+                    style="font-size: 20px; color: black"
+                  >
+                    <i class="fa fa-clock-o"></i> Rejected
+                    {{ getFormattedDate(job_application.updateDate) }}
+                  </li>
+                  <!-- APPOINTMENTS -->
+                  <div>
+                    <div>
+                      <div>
+                        <div style="margin-top: 30px;">
+                          <div
+                            id="batchDelete"
+                            class="category-table custom-datatable transcation-datatable user-image"
+                          >
+                            <div class="table-responsive">
+                              <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th scope="col" sortable="Title">Title</th>
+                                    <th scope="col" sortable="Candidate">
+                                      Candidate
+                                    </th>
+                                    <th scope="col" sortable="Type">Type</th>
+                                    <th scope="col" sortable="Mode">Mode</th>
+                                    <th scope="col" sortable="Status">
+                                      Status
+                                    </th>
+                                    <th scope="col" sortable="Booked">
+                                      Starts
+                                    </th>
+                                    <th scope="col" sortable="Booked">Ends</th>
+                                    <th scope="col" sortable="Booked">
+                                      Booked
+                                    </th>
+                                    <th scope="col" sortable="Updated">
+                                      Updated
+                                    </th>
+                                    <th scope="col">Details</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr
+                                    *ngFor="
+                                      let item of job_application_appointments
+                                    "
+                                  >
+                                    <td>{{ item.title }}</td>
+                                    <td>
+                                      {{ item.jobApplication.studentName }}
+                                    </td>
+                                    <td>
+                                      {{
+                                        getLabel(
+                                          appointmentTypes,
+                                          item.appointmentType
+                                        )
+                                      }}
+                                    </td>
+                                    <td>{{ item.appointmentLocation }}</td>
+                                    <td>
+                                      <span
+                                        class="cursor-pointer job-application-status"
+                                        [ngClass]="{
+                                          'bg-2e55fa':
+                                            item.appointmentStatus == 'Booked',
+                                          'bg-6c5dd3':
+                                            item.appointmentStatus ==
+                                            'Approved',
+                                          'bg-black':
+                                            item.appointmentStatus ==
+                                              'Declined' ||
+                                            item.appointmentStatus ==
+                                              'Canceled',
+                                          'bg-pink':
+                                            item.appointmentStatus ==
+                                            'Finished',
+                                          'bg-gray':
+                                            item.appointmentStatus ==
+                                              'Absent_Student' ||
+                                            item.appointmentStatus ==
+                                              'Absent_Employer'
+                                        }"
+                                        >{{ item.appointmentStatus }}</span
+                                      >
+                                    </td>
+                                    <td>{{ item.startDate }}</td>
+                                    <td>{{ item.endDate }}</td>
+                                    <td>{{ item.creationDate }}</td>
+                                    <td>{{ item.updateDate }}</td>
+                                    <td>
+                                      <button
+                                        class="btn btn-sm btn-secondary"
+                                        (click)="appointmentDetails(item)"
+                                      >
+                                        Details
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <li
+                    *ngIf="job_application.applicationStatus == 'Declined'"
+                    style="font-size: 20px; color: red"
+                  >
+                    <i class="fa fa-clock-o"></i> Declined
+                    {{ getFormattedDate(job_application.declineDate) }}
+                  </li>
+                  <li
+                    *ngIf="job_application.acceptedDate != null"
+                    style="font-size: 20px; color: blue; margin-top: 10px"
+                  >
+                    <i class="fa fa-clock-o"></i> Accepted
+                    {{ getFormattedDate(job_application.acceptedDate) }}
+                  </li>
+                  <li style="font-size: 20px; color: blue; margin-top: 10px">
+                    <i class="fa fa-clock-o"></i> Applied
+                    {{ getFormattedDate(job_application.creationDate) }}
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

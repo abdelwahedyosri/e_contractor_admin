@@ -104,6 +104,18 @@ export class NavService {
 		{
 			title: 'Login',path: '/auth/login', icon: 'log-in', type: 'link', active: false
 		}*/
+
+		{
+			title: 'Job Offers', icon: 'box', type: 'sub', active: true, children: [
+				{ path: '/job-offers/', title: 'Job Offers', type: 'link' },
+				{ path: '/job-offers/list-offers', title: 'Job Offers List', type: 'link' },
+				{ path: '/job-offers/drafts-offers', title: 'Job Offers Drafts', type: 'link' },
+				{ path: '/job-offers/job-applications', title: 'Job Applications', type: 'link' },
+				{ path: '/job-offers/job-appointments', title: 'Job Appointments', type: 'link' },
+				{ path: '/job-offers/job-files', title: 'Job Files', type: 'link' },
+				{ path: '/job-offers/job-skills', title: 'Job Skills', type: 'link' },
+			]
+		},
 	]
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

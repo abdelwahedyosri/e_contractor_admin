@@ -26,7 +26,8 @@
               "lodash",
               "chartist",
               "chart.js",
-              "clone-deep"
+              "clone-deep",
+              "ng-chartist"
             ],
             "outputPath": "dist/e-contractor-back-office",
             "index": "src/index.html",
@@ -35,12 +36,16 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/job-offer"
             ],
             "styles": [
               "src/styles.scss",
               "src/assets/scss/style.scss",
-              "node_modules/font-awesome/scss/font-awesome.scss"
+              "node_modules/font-awesome/scss/font-awesome.scss",
+              "src/assets/job-offer/css/template.scss",
+              "src/assets/job-offer/css/job_offer_style.scss",
+              "src/assets/job-offer/css/style.scss"
             ],
             "scripts": [],
             "vendorChunk": true,
@@ -58,7 +63,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
