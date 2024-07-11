@@ -1,0 +1,93 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5>Published Job Offers List</h5>
+      <div>
+        <input
+          type="text"
+          [formControl]="searchControl"
+          placeholder="Search job..."
+          class="form-control"
+        />
+      </div>
+      <div class="btn-popup">
+        <a class="btn btn-primary" [routerLink]="'/job-offers/drafts-offers'"
+          >Consult Drafts</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <div
+        id="batchDelete"
+        class="category-table custom-datatable transcation-datatable user-image"
+      >
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" sortable="Reference" (sort)="onSort()">
+                  Reference
+                </th>
+                <th scope="col" sortable="Company" (sort)="onSort()">
+                  Company
+                </th>
+                <th scope="col" sortable="Title" (sort)="onSort()">Title</th>
+                <th scope="col" sortable="Requirements" (sort)="onSort()">
+                  Requirements
+                </th>
+                <th scope="col" sortable="Interests" (sort)="onSort()">
+                  Interests
+                </th>
+                <th scope="col" sortable="Savings" (sort)="onSort()">
+                  Savings
+                </th>
+                <th scope="col" sortable="Consultations" (sort)="onSort()">
+                  Consultations
+                </th>
+                <th scope="col" sortable="Applications" (sort)="onSort()">
+                  Applications
+                </th>
+                <th scope="col" sortable="Publishing Date" (sort)="onSort()">
+                  Publishing Date
+                </th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of jobOffers">
+                <td>{{ item.reference }}</td>
+                <td>{{ item.employer.companyName }}</td>
+                <td>{{ item.jobTitle }}</td>
+                <td>{{ item.requirements.length }}</td>
+                <td>{{ item.jobInterests.length }}</td>
+                <td>{{ item.jobSavings.length }}</td>
+                <td>{{ item.jobConsultations.length }}</td>
+                <td>{{ getJobApplicationsCount(item) }}</td>
+                <td>{{ item.publishingDate }}</td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-secondary"
+                    (click)="jobOfferDetails(item)"
+                  >
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center p-2">
+            <ngb-pagination
+              [collectionSize]="total"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              (pageChange)="onPageChange($event)"
+            >
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends-->

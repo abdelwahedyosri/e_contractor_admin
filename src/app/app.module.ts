@@ -28,6 +28,7 @@ import { EventService } from './shared/service/event.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar'; 
 import { RolesModule } from './components/roles/roles.module';
 import { PermissionsModule } from './components/permissions/permissions.module';
+import { JobOffersModule } from './components/job-offers/job-offers.module';
 
 
 
@@ -60,8 +61,8 @@ import { PermissionsModule } from './components/permissions/permissions.module';
     HttpClientModule,
     MatSnackBarModule,
     RolesModule,
-    PermissionsModule
-    
+    PermissionsModule,
+    JobOffersModule
   ],
   providers: [EventService],
   bootstrap: [AppComponent]

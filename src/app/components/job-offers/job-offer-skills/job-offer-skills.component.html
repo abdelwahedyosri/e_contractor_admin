@@ -1,0 +1,83 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5>Job Skills List</h5>
+      <div>
+        <input
+          type="text"
+          [formControl]="searchControl"
+          placeholder="Search skill..."
+          class="form-control"
+        />
+      </div>
+      <div class="btn-popup">
+        <a class="btn btn-primary" [routerLink]="'/job-offers/list-offers'"
+          >Consult Job Offers</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <div
+        id="batchDelete"
+        class="category-table custom-datatable transcation-datatable user-image"
+      >
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" sortable="Reference" (sort)="onSort()">#</th>
+                <th scope="col" sortable="Skill" (sort)="onSort()">Skill</th>
+                <th scope="col" sortable="Company" (sort)="onSort()">
+                  Company
+                </th>
+                <th scope="col" sortable="Availability" (sort)="onSort()">
+                  Availability
+                </th>
+                <th scope="col" sortable="Creation Date" (sort)="onSort()">
+                  Creation Date
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of skills; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.label }}</td>
+                <td>{{ item.employer.companyName }}</td>
+                <td>
+                  <span
+                    class="cursor-pointer job-application-status"
+                    [ngClass]="{
+                      'bg-6c5dd3': item.isDeleted == 0,
+                      'bg-black': item.isDeleted == 1
+                    }"
+                    >{{ item.isDeleted ? "Deleted" : "Available" }}</span
+                  >
+                </td>
+                <td>{{ item.creationDate }}</td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-secondary"
+                    (click)="deleteOrRestore(item)"
+                  >
+                  {{ item.isDeleted ? "Restore" : "Delete" }}
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center p-2">
+            <ngb-pagination
+              [collectionSize]="total"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              (pageChange)="onPageChange($event)"
+            >
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends-->

@@ -1,0 +1,482 @@
+<div>
+  <div>
+    <div class="page-wraper">
+      <!-- Content -->
+      <div class="page-content bg-white">
+        <!-- contact area -->
+        <div class="content-block">
+          <!-- Job Detail -->
+          <div
+            class="section-full content-inner-1 w-100"
+            style="max-width: 100%; padding-top: 20px"
+          >
+            <div
+              class="container w-100"
+              style="margin-left: 0px; margin-right: 0px; max-width: 100%"
+            >
+              <div class="row w-100">
+                <div class="w-100 flex-row widget bg-white">
+                  <div class="p-lr20 p-t20 widget_getintuch radius-sm w-100">
+                    <div
+                      class="job-post-company mb-20-px flex-row gap-10-px align-items-center"
+                    >
+                      <span
+                        ><img
+                          src="../../../../assets/job-offer/images/icon1.png"
+                      /></span>
+                      <label class="mb-0" style="font-size: 20px">{{
+                        job_offer.employer.companyName
+                      }}</label>
+                    </div>
+                    <h3 class="m-t0 m-b10 font-weight-700 title-head">
+                      <a class="text-secondry m-r30">{{
+                        job_offer.jobTitle
+                      }}</a>
+                    </h3>
+                    <ul class="job-info">
+                      <li class="ml-0-px pl-0-px">
+                        {{ job_offer.city ? job_offer.city + ", " : "" }}
+                        {{
+                          job_offer.country
+                            ? getLabel(jobCountries, job_offer.country)
+                            : ""
+                        }}
+                      </li>
+                      <label style="margin-top: -3px">.</label>
+                      <li class="pl-10-px">
+                        Published
+                        {{ getFormattedDate(job_offer.publishingDate) }}
+                      </li>
+                    </ul>
+                    <ul>
+                      <li class="align-items-center job-time mr-auto flex-row">
+                        <i class="fa fa-briefcase" style="top: 0"> </i>
+                        <span>{{ getLabel(jobTypes, job_offer.type) }}</span>
+                        <span class="ml-10-px">{{
+                          getLabel(jobWorkplaces, job_offer.workspaceType)
+                        }}</span>
+                        <span class="ml-10-px">{{
+                          getLabel(jobContracts, job_offer.jobContract)
+                        }}</span>
+                      </li>
+                    </ul>
+                    <div class="flex-row gap-40-px">
+                      <ul>
+                        <li>
+                          <i class="ti-shield"></i
+                          ><strong class="font-weight-700 text-black"
+                            >Experience</strong
+                          >{{
+                            getLabel(
+                              employmentExperiences,
+                              job_offer.experience
+                            )
+                          }}
+                        </li>
+
+                        <li>
+                          <i class="fa fa-book"></i
+                          ><strong class="font-weight-700 text-black"
+                            >Education</strong
+                          >{{
+                            getLabel(educationLevels, job_offer.educationLevel)
+                          }}
+                        </li>
+
+                        <li>
+                          <i class="fa fa-language"></i
+                          ><strong class="font-weight-700 text-black"
+                            >Language</strong
+                          >{{ getLabel(languages, job_offer.language) }}
+                        </li>
+                      </ul>
+                      <ul>
+                        <li>
+                          <i class="fa fa-th-large"></i
+                          ><strong class="font-weight-700 text-black"
+                            >Category</strong
+                          >{{ getLabel(jobCategories, job_offer.category) }}
+                        </li>
+                        <li>
+                          <i class="fa fa fa-suitcase"></i
+                          ><strong class="font-weight-700 text-black"
+                            >Open Posts</strong
+                          >{{ job_offer.openPositions }} Post(s)
+                        </li>
+                        <li *ngIf="job_offer.renumeration">
+                          <i class="fa fa-money"></i
+                          ><strong class="font-weight-700 text-black"
+                            >Renumeration</strong
+                          >
+                          {{ job_offer.renumeration }}
+                          {{ job_offer.renumerationCurrency }}
+                          {{
+                            getLabel(
+                              jobRenumerationPeriods,
+                              job_offer.renumerationPeriod
+                            )
+                          }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="w-100" style="padding-top: 10px">
+                    <div class="w-100">
+                      <div class="job-info-box">
+                        <h5 class="font-weight-600">Description</h5>
+                        <div
+                          class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"
+                        ></div>
+                        <p
+                          [innerHTML]="getFormatText(job_offer.description)"
+                        ></p>
+                        <h5 class="font-weight-600">Main Responsibilities:</h5>
+                        <div
+                          class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"
+                        ></div>
+                        <p
+                          [innerHTML]="
+                            getFormatText(job_offer.tasksDescription)
+                          "
+                        ></p>
+                        <h5 class="font-weight-600">Required Qualifications</h5>
+                        <div
+                          class="dez-divider divider-2px bg-gray-dark mb-4 mt-0"
+                        ></div>
+                        <ul class="list-num-count no-round">
+                          <div>
+                            <div
+                              class="pl-20-px"
+                              *ngFor="
+                                let requirement of job_offer.requirements;
+                                let index = index
+                              "
+                            >
+                              <li class="font-black" style="font-size: 18px">
+                                {{ requirement.label }} experience:
+                                {{
+                                  getLabel(
+                                    requirementExperiences,
+                                    requirement.value
+                                  )
+                                }}
+                              </li>
+                            </div>
+                          </div>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="w-100">
+                      <div
+                        class="widget bg-white p-lr20 p-t20 widget_getintuch radius-sm"
+                      >
+                        <div
+                          class="job-post-company mb-20-px flex-row gap-10-px align-items-center"
+                        >
+                          <img
+                            style="width: 60px"
+                            src="../../../../assets/job-offer/images/icons/qualifications.png"
+                          />
+                          <h3
+                            style="margin-bottom: 0px"
+                            class="m-t0 m-b10 font-weight-700 title-head"
+                          >
+                            <a class="text-secondry m-r30">SKILLS</a>
+                          </h3>
+                        </div>
+                        <ul>
+                          <li
+                            class="align-items-center job-time mr-auto flex-row pl-0"
+                          >
+                            <span
+                              class="ml-10-px"
+                              *ngFor="
+                                let skill of job_offer.skills;
+                                let index = index
+                              "
+                              >{{ skill }}</span
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Job Detail -->
+          <!-- Our Jobs -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid widget bg-white">
+    <div class="card">
+      <div
+        class="card-header d-flex justify-content-between align-items-center"
+      >
+        <h5>Job Offer Applications List</h5>
+        <div>
+          <input
+            type="text"
+            [formControl]="searchControl_applications"
+            placeholder="Search application..."
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="card-body">
+        <div
+          id="batchDelete"
+          class="category-table custom-datatable transcation-datatable user-image"
+        >
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    sortable="Reference"
+                    (sort)="onSort_applications()"
+                  >
+                    Reference
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Candidate"
+                    (sort)="onSort_applications()"
+                  >
+                    Candidate
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Files"
+                    (sort)="onSort_applications()"
+                  >
+                    Files
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Appointments"
+                    (sort)="onSort_applications()"
+                  >
+                    Appointments
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Status"
+                    (sort)="onSort_applications()"
+                  >
+                    Status
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Applied"
+                    (sort)="onSort_applications()"
+                  >
+                    Applied
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Updated"
+                    (sort)="onSort_applications()"
+                  >
+                    Updated
+                  </th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of applications">
+                  <td>{{ item.reference }}</td>
+                  <td>{{ item.studentName }}</td>
+                  <td>{{ item.jobApplicationFiles.length }}</td>
+                  <td>{{ getAppointmentsCount(item.applicationId) }}</td>
+                  <td>
+                    <span
+                      class="cursor-pointer job-application-status"
+                      [ngClass]="{
+                        'bg-2e55fa': item.applicationStatus == 'Sent',
+                        'bg-6c5dd3': item.applicationStatus == 'Accepted',
+                        'bg-black':
+                          item.applicationStatus == 'Declined' ||
+                          item.applicationStatus == 'Rejected',
+                        'bg-pink': item.applicationStatus == 'Approved',
+                        'bg-gray': item.applicationStatus == 'Expired'
+                      }"
+                      >{{ item.applicationStatus }}</span
+                    >
+                  </td>
+                  <td>{{ item.creationDate }}</td>
+                  <td>{{ item.updateDate }}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-secondary"
+                      (click)="applicationDetails(item)"
+                    >
+                      Details
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-center p-2">
+              <ngb-pagination
+                [collectionSize]="total_applications"
+                [(page)]="page_applications"
+                [pageSize]="pageSize_applications"
+                (pageChange)="onPageChange_applications($event)"
+              >
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid widget bg-white">
+    <div class="card">
+      <div
+        class="card-header d-flex justify-content-between align-items-center"
+      >
+        <h5>Job Offer Appointments List</h5>
+        <div>
+          <input
+            type="text"
+            [formControl]="searchControl_appointments"
+            placeholder="Search appointment..."
+            class="form-control"
+          />
+        </div>
+      </div>
+      <div class="card-body">
+        <div
+          id="batchDelete"
+          class="category-table custom-datatable transcation-datatable user-image"
+        >
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    sortable="Title"
+                    (sort)="onSort_appointments()"
+                  >
+                    Title
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Candidate"
+                    (sort)="onSort_appointments()"
+                  >
+                    Candidate
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Type"
+                    (sort)="onSort_appointments()"
+                  >
+                    Type
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Mode"
+                    (sort)="onSort_appointments()"
+                  >
+                    Mode
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Status"
+                    (sort)="onSort_appointments()"
+                  >
+                    Status
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Booked"
+                    (sort)="onSort_appointments()"
+                  >
+                    Starts
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Booked"
+                    (sort)="onSort_appointments()"
+                  >
+                    Ends
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Booked"
+                    (sort)="onSort_appointments()"
+                  >
+                    Booked
+                  </th>
+                  <th
+                    scope="col"
+                    sortable="Updated"
+                    (sort)="onSort_appointments()"
+                  >
+                    Updated
+                  </th>
+                  <th scope="col">Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of appointments">
+                  <td>{{ item.title }}</td>
+                  <td>{{ item.jobApplication.studentName }}</td>
+                  <td>
+                    {{ getLabel(appointmentTypes, item.appointmentType) }}
+                  </td>
+                  <td>{{ item.appointmentLocation }}</td>
+                  <td>
+                    <span
+                      class="cursor-pointer job-application-status"
+                      [ngClass]="{
+                        'bg-2e55fa': item.appointmentStatus == 'Booked',
+                        'bg-6c5dd3': item.appointmentStatus == 'Approved',
+                        'bg-black':
+                          item.appointmentStatus == 'Declined' ||
+                          item.appointmentStatus == 'Canceled',
+                        'bg-pink': item.appointmentStatus == 'Finished',
+                        'bg-gray':
+                          item.appointmentStatus == 'Absent_Student' ||
+                          item.appointmentStatus == 'Absent_Employer'
+                      }"
+                      >{{ item.appointmentStatus }}</span
+                    >
+                  </td>
+                  <td>{{ item.startDate }}</td>
+                  <td>{{ item.endDate }}</td>
+                  <td>{{ item.creationDate }}</td>
+                  <td>{{ item.updateDate }}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-secondary"
+                      (click)="appointmentDetails(item)"
+                    >
+                      Details
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-center p-2">
+              <ngb-pagination
+                [collectionSize]="total_appointments"
+                [(page)]="page_appointments"
+                [pageSize]="pageSize_appointments"
+                (pageChange)="onPageChange_appointments($event)"
+              >
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5>Job Offer Appointments List</h5>
+      <div>
+        <input
+          type="text"
+          [formControl]="searchControl"
+          placeholder="Search appointment..."
+          class="form-control"
+        />
+      </div>
+    </div>
+    <div class="card-body">
+      <div
+        id="batchDelete"
+        class="category-table custom-datatable transcation-datatable user-image"
+      >
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col" sortable="Title" (sort)="onSort()">Title</th>
+                <th scope="col" sortable="Job Offer" (sort)="onSort()">
+                  Job Offer
+                </th>
+                <th scope="col" sortable="Candidate" (sort)="onSort()">
+                  Candidate
+                </th>
+                <th scope="col" sortable="Type" (sort)="onSort()">Type</th>
+                <th scope="col" sortable="Mode" (sort)="onSort()">Mode</th>
+                <th scope="col" sortable="Status" (sort)="onSort()">Status</th>
+                <th scope="col" sortable="Booked" (sort)="onSort()">Starts</th>
+                <th scope="col" sortable="Booked" (sort)="onSort()">Ends</th>
+                <th scope="col" sortable="Booked" (sort)="onSort()">Booked</th>
+                <th scope="col" sortable="Updated" (sort)="onSort()">
+                  Updated
+                </th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of appointments">
+                <td>{{ item.title }}</td>
+                <td>{{ item.jobApplication.jobOffer.jobTitle }}</td>
+                <td>{{ item.jobApplication.studentName }}</td>
+                <td>
+                  {{ getLabel(appointmentTypes, item.appointmentType) }}
+                </td>
+                <td>{{ item.appointmentLocation }}</td>
+                <td>
+                  <span
+                    class="cursor-pointer job-application-status"
+                    [ngClass]="{
+                      'bg-2e55fa': item.appointmentStatus == 'Booked',
+                      'bg-6c5dd3': item.appointmentStatus == 'Approved',
+                      'bg-black':
+                        item.appointmentStatus == 'Declined' ||
+                        item.appointmentStatus == 'Canceled',
+                      'bg-pink': item.appointmentStatus == 'Finished',
+                      'bg-gray':
+                        item.appointmentStatus == 'Absent_Student' ||
+                        item.appointmentStatus == 'Absent_Employer'
+                    }"
+                    >{{ item.appointmentStatus }}</span
+                  >
+                </td>
+                <td>{{ item.startDate }}</td>
+                <td>{{ item.endDate }}</td>
+                <td>{{ item.creationDate }}</td>
+                <td>{{ item.updateDate }}</td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-secondary"
+                    (click)="appointmentDetails(item)"
+                  >
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center p-2">
+            <ngb-pagination
+              [collectionSize]="total"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              (pageChange)="onPageChange($event)"
+            >
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

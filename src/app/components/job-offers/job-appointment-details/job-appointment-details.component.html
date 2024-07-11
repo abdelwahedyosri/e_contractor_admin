@@ -1,0 +1,167 @@
+<div class="job-offer-page-title" style="padding-left: 10px">
+    <div class="flex-row justify-content-between">
+      <div
+        class="flex-cl justify-content-between w-75"
+        style="display: flex; flex-direction: column"
+      >
+        <label style="font-size: 20px"
+          >Job Offer: {{ appointment.jobApplication.jobOffer.jobTitle }}
+        </label>
+        <label style="font-size: 20px"
+          >Company:
+          {{ appointment.jobApplication.jobOffer.employer.companyName }}
+        </label>
+        <label style="font-size: 20px"
+          >Candidate:
+          {{ appointment.jobApplication.studentName }}
+        </label>
+      </div>
+    </div>
+  </div>
+<div>
+  <div>
+    <div
+      style="
+        border-radius: 10px;
+        height: fit-content;
+        border: #6c5dd3 1px solid;
+        display: flex;
+        flex-direction: column;
+        color: black;
+      "
+    >
+      <div
+        class="w-100 flex-row justify-content-between align-items-center"
+        style="border-radius: 10px; padding: 10px"
+        [style.backgroundColor]="appointment.dotColor"
+      >
+        <label> {{ appointment.title }} </label>
+        <div class="flex-row job-time" style="gap: 10px; padding: 10px">
+          <div
+            class="site-button border-radius-15"
+            style="
+              width: fit-content;
+              padding: 10px;
+              background-color: transparent;
+              border: black 1px solid;
+              cursor: default;
+            "
+          >
+            <a style="color: black">
+              <span
+                style="
+                  background-color: transparent;
+                  border: none;
+                  color: black;
+                "
+                >{{ appointment.appointmentStatus }}</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="flex-row job-time" style="gap: 10px; padding: 10px">
+        <span>{{
+          getLabel(appointmentTypes, appointment.appointmentType)
+        }}</span>
+        <span>{{
+          getLabel(appointmentLocations, appointment.appointmentLocation)
+        }}</span>
+      </div>
+      <p
+        *ngIf="appointment.appointmentLocation == 'Remote'"
+        class="w-100 flex-row"
+        style="
+          font-size: 20px;
+          color: blue;
+          justify-content: left;
+          padding-left: 10px;
+          gap: 3px;
+        "
+      >
+        <i class="fa fa-link"></i> Link:
+        {{ appointment.meetLink }}
+      </p>
+      <label style="padding: 10px; margin: 0px"> Description : </label>
+      <p
+        style="padding-left: 10px; margin: 0px"
+        [innerHTML]="getFormatText(appointment.description)"
+      ></p>
+      <div class="flex-column">
+        <p
+          class="w-100 flex-row"
+          style="
+            font-size: 20px;
+            color: blue;
+            justify-content: right;
+            padding: 10px;
+            margin: 0px;
+            gap: 3px;
+          "
+        >
+          <i class="fa fa-clock-o"></i> Start:
+          {{ getTime(appointment.startDate) }}
+          On:
+          {{ formatdate(appointment.startDate) }}
+        </p>
+        <p
+          class="w-100 flex-row"
+          style="
+            font-size: 20px;
+            color: blue;
+            justify-content: right;
+            padding-right: 10px;
+            gap: 3px;
+          "
+        >
+          <i class="fa fa-clock-o"></i> End:
+          {{ getTime(appointment.endDate) }}
+          On:
+          {{ formatdate(appointment.endDate) }}
+        </p>
+        <p
+          *ngIf="appointment.appointmentLocation == 'On Site'"
+          class="w-100 flex-row"
+          style="
+            font-size: 20px;
+            color: blue;
+            justify-content: right;
+            padding-right: 10px;
+            gap: 3px;
+          "
+        >
+          <i class="fa fa-map-marker"></i> Location:
+          {{ appointment.appointmentAddress }}
+        </p>
+      </div>
+      <div class="flex-column">
+        <label style="padding: 10px; margin: 0px">
+          Employer Comment:
+          {{
+            appointment.employerComment == null ||
+            appointment.employerComment == ""
+              ? "(No comment was left by the employer)"
+              : ""
+          }}
+        </label>
+        <p
+          *ngIf="
+            appointment.employerComment != null &&
+            appointment.employerComment != ''
+          "
+          style="padding-left: 10px; margin: 0px"
+          [innerHTML]="getFormatText(appointment.employerComment)"
+        ></p>
+        <label style="padding: 10px; margin: 0px"> Student Comment : </label>
+        <p
+          *ngIf="
+            appointment.studentComment != null &&
+            appointment.studentComment != ''
+          "
+          style="padding-left: 10px; margin: 0px"
+          [innerHTML]="getFormatText(appointment.studentComment)"
+        ></p>
+      </div>
+    </div>
+  </div>
+</div>
