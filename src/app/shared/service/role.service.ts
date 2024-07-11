@@ -21,7 +21,7 @@ export class RoleService {
 
   // Fetch all roles
   getAllRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>(this.baseUrl, { headers: this.getHeaders() });
+    return this.http.get<Role[]>(this.baseUrl,);
   }
 
   // Fetch role by ID
