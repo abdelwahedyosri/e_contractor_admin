@@ -39,16 +39,19 @@ export class JobOfferDetailsComponent implements OnInit {
     console.log(reference);
     if (reference) {
       this.fetchJobOffer(reference);
+      this.jobOfferService.getJobOfferKpis(reference).subscribe((response: any) => {
+        this.data = response;
+      });
     }
   }
+  data = {} as any;
+
 
   fetchJobOffer(reference: string) {
     this.jobOfferService.getJobOffer(reference).subscribe((response: any) => {
       this.job_offer = response.jobOffer;
       this.applications = response.applications;
       this.appointments = response.appointments;
-      console.log(response);
-
       const skills =
         this.job_offer.skills != null ? this.job_offer.skills.split(",") : [];
       this.job_offer.skills = skills;

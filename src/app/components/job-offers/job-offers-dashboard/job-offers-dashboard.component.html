@@ -1,1 +1,215 @@
-<p>job-offers-dashboard works!</p>
+<div>
+  <div>
+    <div id="loader" *ngIf="loader"></div>
+  </div>
+  <div>
+    <div class="dashboard">
+      <div class="card-container">
+        <div class="card">
+          <p style="font-size: 30px; text-align: center">Overview</p>
+          <div
+            style="
+              flex-direction: row;
+              flex-wrap: wrap;
+              gap: 10px;
+              justify-content: center;
+              display: flex;
+            "
+          >
+            <div class="number-card">
+              <p><strong>Total Open Positions</strong></p>
+              <p>{{ data.totalOpenPositions }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Total Savings</strong></p>
+              <p>{{ data.totalSavings }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Total Consultations</strong></p>
+              <p>{{ data.totalConsultations }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Total Interests</strong></p>
+              <p>{{ data.totalInterests }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Total Applications</strong></p>
+              <p>{{ data.totalApplications }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Total Appointments</strong></p>
+              <p>{{ data.totalAppointments }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Total Files</strong></p>
+              <p>{{ data.totalFiles }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="width: 500px !important; min-width: none">
+          <p style="font-size: 30px; text-align: center">Job Offers</p>
+          <div
+            style="
+              flex-direction: row;
+              flex-wrap: wrap;
+              gap: 10px;
+              justify-content: center;
+              display: flex;
+            "
+          >
+            <div class="number-card">
+              <p><strong>Total Job Offers</strong></p>
+              <p>{{ data.totalJobOffers }}</p>
+            </div>
+
+            <div
+              class="number-card"
+              *ngFor="let status of data.jobOffersByStatus"
+            >
+              <p>
+                <strong>Total {{ status.status }}</strong>
+              </p>
+              <p>{{ status.count }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="card">
+            <h2>Job Offers by Status</h2>
+            <apx-chart
+            [series]="chartOptions.series||[]"
+            [labels]="chartOptions.labels"
+            [responsive]="chartOptions.responsive||[]"
+            type="pie"
+          ></apx-chart>
+          </div> -->
+
+        <div class="card">
+          <p style="font-size: 30px; text-align: center">Averages Per Offer</p>
+          <div
+            style="
+              flex-direction: row;
+              flex-wrap: wrap;
+              gap: 10px;
+              justify-content: center;
+              display: flex;
+            "
+          >
+            <div class="number-card">
+              <p><strong>Average Applications</strong></p>
+              <p>{{ data.averageApplicationsPerOffer | number : "1.1-2" }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Average Consultations</strong></p>
+              <p>{{ data.averageConsultationsPerOffer | number : "1.1-2" }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Average Interests</strong></p>
+              <p>{{ data.averageInterestsPerOffer | number : "1.1-2" }}</p>
+            </div>
+            <div class="number-card">
+              <p><strong>Average Savings</strong></p>
+              <p>{{ data.averageSavingsPerOffer | number : "1.1-2" }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="job-offers-status">
+          <h2>Job Offers by Status</h2>
+          <ul>
+            <li *ngFor="let offer of data.jobOffersByStatus">
+              {{ offer.status }}: {{ offer.count }}
+            </li>
+          </ul>
+        </div> -->
+
+      <div class="card-container" style="justify-content: center">
+        <div class="card">
+          <p style="font-size: 30px; text-align: center">
+            Top 10 Job Offers Interactions
+          </p>
+          <div class="user-status table-responsive products-table">
+            <table class="table table-bordernone mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Reference</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Students Consultations</th>
+                  <th scope="col">Consultations</th>
+                  <th scope="col">Savings</th>
+                  <th scope="col">Interests</th>
+                  <th scope="col">Applications</th>
+                  <th scope="col">Total Interactions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let interaction of data.topJobOffersByInteractions">
+                  <td>{{ interaction.reference }}</td>
+                  <td class="bd-t-none u-s-tb">
+                    <span class="text-muted digits"
+                      >{{ interaction.title }} ({{
+                        interaction.totalInteractions
+                      }}+)</span
+                    >
+                  </td>
+                  <td class="digits">{{ interaction.consultations }}</td>
+                  <td class="digits">{{ interaction.consultationsCount }}</td>
+                  <td class="digits">{{ interaction.savingsCount }}</td>
+                  <td class="digits">{{ interaction.interestsCount }}</td>
+                  <td class="digits">{{ interaction.applicationsCount }}</td>
+                  <td class="digits">{{ interaction.totalInteractions }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-container" style="justify-content: center">
+        <div class="card">
+          <p style="font-size: 30px; text-align: center">
+            Top Candidates Interactions
+          </p>
+          <div class="user-status table-responsive products-table">
+            <table class="table table-bordernone mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Candidate</th>
+                  <th scope="col">Profissional Title</th>
+                  <th scope="col">Region</th>
+                  <th scope="col">Consultations</th>
+                  <th scope="col">Savings</th>
+                  <th scope="col">Interests</th>
+                  <th scope="col">Applications</th>
+                  <th scope="col">Total Interactions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let interaction of data.candidateInteractions">
+                  <td>{{ interaction.candidateName }}</td>
+                  <td>{{ interaction.title }}</td>
+                  <td>{{ interaction.region }}</td>
+                  <td class="digits">{{ interaction.totalConsultations }}</td>
+                  <td class="digits">{{ interaction.totalSavings }}</td>
+                  <td class="digits">{{ interaction.totalInterests }}</td>
+                  <td class="digits">{{ interaction.totalApplications }}</td>
+                  <td class="digits">
+                    {{
+                      interaction.totalConsultations +
+                        interaction.totalSavings +
+                        interaction.totalInterests +
+                        interaction.totalApplications
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div></div> -->
+</div>

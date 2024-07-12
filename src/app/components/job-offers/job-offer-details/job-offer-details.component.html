@@ -5,6 +5,49 @@
       <div class="page-content bg-white">
         <!-- contact area -->
         <div class="content-block">
+          <div class="card-container" style="justify-content: center">
+            <div class="card">
+              <p style="font-size: 30px; text-align: center">Overview</p>
+              <div
+                style="
+                  flex-direction: row;
+                  flex-wrap: wrap;
+                  gap: 10px;
+                  justify-content: center;
+                  display: flex;
+                "
+              >
+                <div class="number-card">
+                  <p><strong>Total Savings</strong></p>
+                  <p>{{ data.totalSavings }}</p>
+                </div>
+                <div class="number-card">
+                  <p><strong>Students Consultations</strong></p>
+                  <p>{{ data.totalConsultations }}</p>
+                </div>
+                <div class="number-card">
+                  <p><strong>Total Consultations</strong></p>
+                  <p>{{ data.totalConsultations }}</p>
+                </div>
+                <div class="number-card">
+                  <p><strong>Total Interests</strong></p>
+                  <p>{{ data.totalInterests }}</p>
+                </div>
+                <div class="number-card">
+                  <p><strong>Total Applications</strong></p>
+                  <p>{{ data.totalApplications }}</p>
+                </div>
+                <div class="number-card">
+                  <p><strong>Total Appointments</strong></p>
+                  <p>{{ data.totalAppointments }}</p>
+                </div>
+                <div class="number-card">
+                  <p><strong>Total Files</strong></p>
+                  <p>{{ data.totalFiles }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- Job Detail -->
           <div
             class="section-full content-inner-1 w-100"
@@ -25,7 +68,7 @@
                           src="../../../../assets/job-offer/images/icon1.png"
                       /></span>
                       <label class="mb-0" style="font-size: 20px">{{
-                        job_offer.employer.companyName
+                        job_offer?.employer?.companyName
                       }}</label>
                     </div>
                     <h3 class="m-t0 m-b10 font-weight-700 title-head">

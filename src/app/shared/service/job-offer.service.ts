@@ -112,4 +112,18 @@ export class JobOfferService {
       { headers: this.getHeaders() }
     );
   }
+
+  getJobOfferKpis(reference: string) {
+    return this.http.get<any>(
+      this.baseUrl + "private/job-application/job-offer-kpis/" + reference,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  getJobOffersKpis() {
+    return this.http.get<any>(
+      this.baseUrl + "private/job-application/job-offers-kpis",
+      { headers: this.getHeaders() }
+    );
+  }
 }
