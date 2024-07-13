@@ -20,6 +20,8 @@ import {
   formatDateAgo,
   formatText,
 } from "src/assets/job-offer/helpers/helpers";
+import { FormControl } from "@angular/forms";
+
 @Component({
   selector: "app-job-offer-appointments",
   templateUrl: "./job-offer-appointments.component.html",
@@ -38,20 +40,88 @@ export class JobOfferAppointmentsComponent implements OnInit {
 
   listApplications() {
     this.jobOfferService.listApplications().subscribe((response: any) => {
-      this.applications = response.applications;
-      this.appointments = response.appointments;
-      console.log(response);
+      this.list = response.appointments;
+      this.applyFilters();
+      this.total = this.list.length;
     });
   }
-
-  applications = [] as any;
+  public list = [] as any;
   public total = 0;
-  public page = 0;
+  public page = 1;
   public pageSize = 10;
   public sortColumn = "";
   public sortDirection = "";
-  public searchControl = "";
+  public searchControl = new FormControl("");
   appointments = [] as any;
+
+  search() {
+    this.page = 1;
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    this.appointments = this.list
+      .filter((appointment: any) => {
+        return (
+          !this.searchControl ||
+          appointment?.jobApplication?.jobOffer?.jobTitle
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.jobOffer?.description
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.jobOffer?.tasksDescription
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.jobOffer?.reference
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.jobOffer?.country
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.jobOffer?.city
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.jobOffer?.location
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.jobOffer?.jobContract
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.studentName
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.studentAddress
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.jobApplication?.email
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.title
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.description
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.studentComment
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.employerComment
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.meetLink
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          appointment?.appointmentAddress
+            ?.toUpperCase()
+            .includes(this.searchControl.value.toUpperCase())
+        );
+      })
+      .slice(
+        (this.page - 1) * this.pageSize,
+        (this.page - 1) * this.pageSize + this.pageSize
+      );
+  }
 
   jobOfferSteps = job_offer_form_steps;
   activeStep: string = "details";
@@ -66,20 +136,13 @@ export class JobOfferAppointmentsComponent implements OnInit {
   employmentExperiences = employment_experiences;
   appointmentTypes = appointment_types;
   appointmentStatuses = appointments_statuses;
-  requirementExperiences = employment_experiences.filter(
-    (req: any) => req.value != "NoExperience"
-  );
-  saved_skills = [] as any;
-  filtered_skills = [] as any;
-  languages = languages;
-  new_skill = "";
-  new_requirement = {
-    label: "",
-    value: "LessThanOneYear",
-  };
 
-  jobApplications = [] as any;
-  applicationReference = "";
+  appointmentDetails(item: any) {
+    this.router.navigate([
+      "/job-offers/appointment-details/" + item.appointmentId,
+    ]);
+  }
+
   calculateMinimumDeadline(): string {
     const today = new Date();
     const minimumDeadline = new Date();
@@ -138,11 +201,5 @@ export class JobOfferAppointmentsComponent implements OnInit {
     //   return "Invalid date";
     // }
     return "";
-  }
-
-  appointmentDetails(item: any) {
-    this.router.navigate([
-      "/job-offers/appointment-details/" + item.appointmentId,
-    ]);
   }
 }

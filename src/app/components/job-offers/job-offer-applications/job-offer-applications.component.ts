@@ -20,6 +20,8 @@ import {
   formatDateAgo,
   formatText,
 } from "src/assets/job-offer/helpers/helpers";
+import { FormControl } from "@angular/forms";
+
 @Component({
   selector: "app-job-offer-applications",
   templateUrl: "./job-offer-applications.component.html",
@@ -38,19 +40,20 @@ export class JobOfferApplicationsComponent implements OnInit {
 
   listApplications() {
     this.jobOfferService.listApplications().subscribe((response: any) => {
-      this.applications = response.applications;
+      this.list = response.applications;
       this.appointments = response.appointments;
-      console.log(response);
+      this.applyFilters();
+      this.total = this.list.length;
     });
   }
-
+  public list = [] as any;
   applications = [] as any;
   public total = 0;
-  public page = 0;
+  public page = 1;
   public pageSize = 10;
   public sortColumn = "";
   public sortDirection = "";
-  public searchControl = "";
+  public searchControl = new FormControl("");
   appointments = [] as any;
 
   jobOfferSteps = job_offer_form_steps;
@@ -66,20 +69,9 @@ export class JobOfferApplicationsComponent implements OnInit {
   employmentExperiences = employment_experiences;
   appointmentTypes = appointment_types;
   appointmentStatuses = appointments_statuses;
-  requirementExperiences = employment_experiences.filter(
-    (req: any) => req.value != "NoExperience"
-  );
-  saved_skills = [] as any;
-  filtered_skills = [] as any;
   languages = languages;
-  new_skill = "";
-  new_requirement = {
-    label: "",
-    value: "LessThanOneYear",
-  };
-
-  jobApplications = [] as any;
   applicationReference = "";
+
   calculateMinimumDeadline(): string {
     const today = new Date();
     const minimumDeadline = new Date();
@@ -111,6 +103,76 @@ export class JobOfferApplicationsComponent implements OnInit {
     return formatText(text);
   }
 
+  applicationDetails(item: any) {
+    this.router.navigate(["/job-offers/application-details/" + item.reference]);
+  }
+
+  getAppointmentsCount(applicationId: any): number {
+    return (
+      this.appointments.filter(
+        (appointment: any) =>
+          appointment.jobApplication.applicationId == applicationId
+      ).length || 0
+    );
+  }
+
+  search() {
+    this.page = 1;
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    console.log(this.list);
+    this.applications = this.list
+      .filter((application: any) => {
+        return (
+          !this.searchControl ||
+          application?.jobOffer.jobTitle
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.jobOffer.description
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.jobOffer.tasksDescription
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.jobOffer.reference
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.jobOffer.country
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.jobOffer.city
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.jobOffer.location
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.jobOffer.jobContract
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.studentName
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.phoneNumber
+            ?.toString()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          application?.studentTitle
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase())
+        );
+      })
+      .slice(
+        (this.page - 1) * this.pageSize,
+        (this.page - 1) * this.pageSize + this.pageSize
+      );
+  }
+
+  onPageChange(page: number) {
+    this.page = page;
+    this.applyFilters();
+  }
+
   onSort() {
     // Resetting other headers
     // this.headers.forEach((header) => {
@@ -121,10 +183,6 @@ export class JobOfferApplicationsComponent implements OnInit {
     // this.sortColumn = column;
     // this.sortDirection = direction;
     // this.loadJobOffers();
-  }
-
-  onPageChange(page: number) {
-    this.page = page - 1; // Convert to zero-based index
   }
 
   getElapsedTime(lastLogin: string): string {
@@ -138,18 +196,5 @@ export class JobOfferApplicationsComponent implements OnInit {
     //   return "Invalid date";
     // }
     return "";
-  }
-
-  applicationDetails(item: any) {
-    this.router.navigate(["/job-offers/application-details/" + item.reference]);
-  }
-
-  getAppointmentsCount(applicationId: any): number {
-    return (
-      this.appointments.filter(
-        (appointment: any) =>
-          appointment.jobApplication.applicationId == applicationId
-      ).length || 0
-    );
   }
 }

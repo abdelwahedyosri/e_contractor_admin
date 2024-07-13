@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { JobOfferService } from "src/app/shared/service/job-offer.service";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-job-offer-skills",
@@ -8,14 +9,14 @@ import { JobOfferService } from "src/app/shared/service/job-offer.service";
   styleUrls: ["./job-offer-skills.component.scss"],
 })
 export class JobOfferSkillsComponent implements OnInit {
+  public list = [] as any;
   public skills = [] as any;
-  public applications = [] as any;
   public total = 0;
-  public page = 0;
+  public page = 1;
   public pageSize = 10;
   public sortColumn = "";
   public sortDirection = "";
-  public searchControl = "";
+  public searchControl = new FormControl("");
 
   constructor(
     private jobOfferService: JobOfferService,
@@ -23,62 +24,39 @@ export class JobOfferSkillsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadJobOffers();
     this.jobOfferService.listSkills().subscribe((response: any) => {
-      this.skills = response.skills;
-      this.total = this.skills.length;
-      console.log(response);
-      // this.refresh();
-      // this.searchText = '';
-      // this.filtersForm.valueChanges.subscribe(() => {
-      //   this.applyFilters();
-      // });
-      // this.loader = false;
+      this.list = response.skills;
+      this.applyFilters();
+      this.total = this.list.length;
     });
   }
-
-  loadJobOffers() {}
-
-  getJobApplicationsCount(jobOffer: any): number {
-    return (
-      this.applications.filter(
-        (application: any) => application.jobOffer.offerId == jobOffer.offerId
-      ).length || 0
-    );
+  search() {
+    this.page = 1;
+    this.applyFilters();
   }
 
-  onSort() {
-    // Resetting other headers
-    // this.headers.forEach((header) => {
-    //   if (header.sortable !== column) {
-    //     header.direction = "";
-    //   }
-    // });
-    // this.sortColumn = column;
-    // this.sortDirection = direction;
-    // this.loadJobOffers();
+  applyFilters() {
+    this.skills = this.list
+      .filter((skill: any) => {
+        return (
+          !this.searchControl ||
+          skill?.label
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase()) ||
+          skill?.employer?.companyName
+            .toUpperCase()
+            .includes(this.searchControl.value.toUpperCase())
+        );
+      })
+      .slice(
+        (this.page - 1) * this.pageSize,
+        (this.page - 1) * this.pageSize + this.pageSize
+      );
   }
 
   onPageChange(page: number) {
-    this.page = page - 1; // Convert to zero-based index
-    this.loadJobOffers();
-  }
-
-  getElapsedTime(lastLogin: string): string {
-    // try {
-    //   // Replace space with 'T' to make it ISO compliant
-    //   const formattedDate = lastLogin.replace(" ", "T");
-    //   const date = new Date(formattedDate);
-    //   return formatDistanceToNow(date, { addSuffix: true });
-    // } catch (error) {
-    //   console.error("Error parsing date:", error);
-    //   return "Invalid date";
-    // }
-    return "";
-  }
-
-  jobOfferDetails(item: any) {
-    this.router.navigate(["/job-offers/offer-details/" + item.reference]);
+    this.page = page;
+    this.applyFilters();
   }
 
   deleteOrRestore(item: any) {
@@ -103,5 +81,30 @@ export class JobOfferSkillsComponent implements OnInit {
           }
         });
     }
+  }
+
+  onSort() {
+    // Resetting other headers
+    // this.headers.forEach((header) => {
+    //   if (header.sortable !== column) {
+    //     header.direction = "";
+    //   }
+    // });
+    // this.sortColumn = column;
+    // this.sortDirection = direction;
+    // this.loadJobOffers();
+  }
+
+  getElapsedTime(lastLogin: string): string {
+    // try {
+    //   // Replace space with 'T' to make it ISO compliant
+    //   const formattedDate = lastLogin.replace(" ", "T");
+    //   const date = new Date(formattedDate);
+    //   return formatDistanceToNow(date, { addSuffix: true });
+    // } catch (error) {
+    //   console.error("Error parsing date:", error);
+    //   return "Invalid date";
+    // }
+    return "";
   }
 }

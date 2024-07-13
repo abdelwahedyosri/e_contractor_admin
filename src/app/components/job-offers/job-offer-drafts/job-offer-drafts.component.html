@@ -9,6 +9,8 @@
           [formControl]="searchControl"
           placeholder="Search draft..."
           class="form-control"
+          (keydown.enter)="search()"
+          (keyup)="search()"
         />
       </div>
       <div class="btn-popup">

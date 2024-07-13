@@ -8,6 +8,8 @@
           [formControl]="searchControl"
           placeholder="Search appointment..."
           class="form-control"
+          (keydown.enter)="search()"
+          (keyup)="search()"
         />
       </div>
     </div>

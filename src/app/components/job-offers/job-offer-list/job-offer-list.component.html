@@ -9,12 +9,9 @@
           [formControl]="searchControl"
           placeholder="Search job..."
           class="form-control"
+          (keydown.enter)="search()"
+          (keyup)="search()"
         />
-      </div>
-      <div class="btn-popup">
-        <a class="btn btn-primary" [routerLink]="'/job-offers/drafts-offers'"
-          >Consult Drafts</a
-        >
       </div>
     </div>
     <div class="card-body">
@@ -48,6 +45,9 @@
                 <th scope="col" sortable="Applications" (sort)="onSort()">
                   Applications
                 </th>
+                <th scope="col" sortable="Status" (sort)="onSort()">
+                  Candidates
+                </th>
                 <th scope="col" sortable="Publishing Date" (sort)="onSort()">
                   Publishing Date
                 </th>
@@ -64,6 +64,18 @@
                 <td>{{ item.jobSavings.length }}</td>
                 <td>{{ item.jobConsultations.length }}</td>
                 <td>{{ getJobApplicationsCount(item) }}</td>
+                <td>
+                  <span
+                    class="cursor-pointer job-application-status"
+                    [ngClass]="{
+                      'bg-6c5dd3': item.status == 'Published',
+                      'bg-gray': item.status == 'Expired'
+                    }"
+                    >{{
+                      item.status == "Published" ? "Accepting" : "Clotured"
+                    }}</span
+                  >
+                </td>
                 <td>{{ item.publishingDate }}</td>
                 <td>
                   <button
